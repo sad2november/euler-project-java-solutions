@@ -16,7 +16,7 @@ public class Euler5 {
     public static void main(String[] args) {
         long maxPrimeNumber = 20L;
         //Getting all primes below value
-        Set<Long> primes = Euler3.getPrimes(maxPrimeNumber);
+        Set<Long> primes = new Euler3().getPrimes(maxPrimeNumber);
         List<Long> divisors = new ArrayList<>(primes);
 
         for (int i = 2; i < maxPrimeNumber; i++) {
