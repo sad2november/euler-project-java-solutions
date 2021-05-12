@@ -1,5 +1,6 @@
 package com.sad.code;
 
+import com.sad.code.solutions.Euler10;
 import com.sad.code.solutions.Euler4;
 import com.sad.code.util.LogTimerAspect;
 import io.qameta.allure.Description;
@@ -14,27 +15,26 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * @see Euler4
+ * @see Euler10
  */
 @EnableAutoConfiguration
-@SpringBootTest(classes = {EmptyService.class, LogTimerAspect.class, Euler4.class})
-public class Euler4Test {
+@SpringBootTest(classes = {EmptyService.class, LogTimerAspect.class, Euler10.class})
+public class Euler10Test {
 
     @Autowired
-    Euler4 euler4;
+    Euler10 euler10;
 
     @ParameterizedTest
     @CsvSource({
-            "999, 906609",
-            "9999, 99000099"
+            "2000000, 142913828922",
+            "20000000, 12272577818052"
     })
-    @Link("https://projecteuler.net/problem=4")
+    @Link("https://projecteuler.net/problem=10")
     @Description(
-            "A palindromic number reads the same both ways.\n" +
-                    "The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.\n" +
-                    "Find the largest palindrome made from the product of two 3-digit numbers."
+            "The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.\n" +
+                    "Find the sum of all the primes below two million."
     )
     public void test(final long from1UnderThisValue, final long expectingResult) {
-        assertEquals(expectingResult, euler4.bruteForceSolution(from1UnderThisValue));
+        assertEquals(expectingResult, euler10.sieveSolution(from1UnderThisValue));
     }
 }
