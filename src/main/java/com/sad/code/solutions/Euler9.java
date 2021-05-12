@@ -1,5 +1,15 @@
 package com.sad.code.solutions;
 
+import com.sad.code.util.LogTimer;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import lombok.val;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
  * <p>
@@ -9,22 +19,24 @@ package com.sad.code.solutions;
  * There exists exactly one Pythagorean triplet for which a + b + c = 1000.
  * Find the product abc.
  */
+@Component
 public class Euler9 {
 
-    public static void main(String[] args) {
+    @LogTimer
+    @Attachment
+    @Step("Getting product of Pythagorean triplet which sum is {sumABC}")
+    public int bruteForceSolution(final int sumABC) {
+        val product = new AtomicInteger(0);
+        val list = IntStream.rangeClosed(1, sumABC - 1).map(x -> x * x).boxed().collect(Collectors.toList());
 
-        for (int a = 2; a < 500; a++) {
-            int a2 = a * a;
-            for (int b = a; b > 1; b--) {
-                int b2 = b * b;
-                int probableC2 = a2 + b2;
-                int probableC = (int) Math.round(Math.sqrt(probableC2));
-
-                if (a + b + probableC == 1000) {
-                    System.out.println(a * b * probableC);
-                    break;
+        list.forEach(i -> list.forEach(j -> {
+            if (!i.equals(j)) {
+                if (list.contains(i + j) && (Math.sqrt(i) + Math.sqrt(j) + Math.sqrt(i + j) == sumABC)) {
+                    product.set((int) (Math.sqrt(i) * Math.sqrt(j) * Math.sqrt(i + j)));
                 }
             }
-        }
+        }));
+
+        return product.get();
     }
 }
