@@ -43,26 +43,9 @@ public class Euler11 {
     @LogTimer
     @Attachment
     public int solution(final String value) {
-        //Creating container
-        int[][] nums = new int[20][20];
-
-        //Filling container
-        val rows = Stream.of(value.replaceAll("\r", "").split("\n"))
-                .filter(s -> s.length() > 3)
-                .collect(Collectors.toList());
-        for (int i = 0; i < 20; i++) {
-            val row = Stream.of(rows.get(i).split(" "))
-                    .filter(ss -> ss.length() == 2)
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-
-            for (int j = 0; j < 20; j++) {
-                nums[i][j] = row.get(j);
-            }
-        }
+        int[][] nums = parseStringTo20x20Matrix(value);
 
         var result = 0;
-
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 17; j++) {
                 result = Integer.max(result, nums[i][j] * nums[i][j + 1] * nums[i][j + 2] * nums[i][j + 3]);
@@ -84,5 +67,27 @@ public class Euler11 {
             }
         }
         return result;
+    }
+
+    public int[][] parseStringTo20x20Matrix(final String value) {
+        //Creating container
+        int[][] nums = new int[20][20];
+
+        //Filling container
+        val rows = Stream.of(value.replaceAll("\r", "").split("\n"))
+                .filter(s -> s.length() > 3)
+                .collect(Collectors.toList());
+        for (int i = 0; i < 20; i++) {
+            val row = Stream.of(rows.get(i).split(" "))
+                    .filter(ss -> ss.length() == 2)
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+            for (int j = 0; j < 20; j++) {
+                nums[i][j] = row.get(j);
+            }
+        }
+
+        return nums;
     }
 }
