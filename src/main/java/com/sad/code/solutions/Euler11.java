@@ -63,53 +63,26 @@ public class Euler11 {
 
         var result = 0;
 
-        //Left and right direction
         for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 16; j++) {
-                if (nums[i][j] != 0 && nums[i][j + 1] != 0 && nums[i][j + 2] != 0 && nums[i][j + 3] != 0) {
-                    val product = nums[i][j] * nums[i][j + 1] * nums[i][j + 2] * nums[i][j + 3];
-                    if (product > result) {
-                        result = product;
-                    }
-                }
+            for (int j = 0; j < 17; j++) {
+                result = Integer.max(result, nums[i][j] * nums[i][j + 1] * nums[i][j + 2] * nums[i][j + 3]);
             }
         }
-
-        //Up and down direction
-        for (int j = 0; j < 20; j++) {
-            for (int i = 0; i < 16; i++) {
-                if (nums[i][j] != 0 && nums[i + 1][j] != 0 && nums[i + 2][j] != 0 && nums[i + 3][j] != 0) {
-                    val product = nums[i][j] * nums[i + 1][j] * nums[i + 2][j] * nums[i + 3][j];
-                    if (product > result) {
-                        result = product;
-                    }
-                }
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 20; j++) {
+                result = Integer.max(result, nums[i][j] * nums[i + 1][j] * nums[i + 2][j] * nums[i + 3][j]);
             }
         }
-
-        //From left up corner to right down direction
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
-                if (nums[i][j] != 0 && nums[i + 1][j + 1] != 0 && nums[i + 2][j + 2] != 0 && nums[i + 3][j + 3] != 0) {
-                    val product = nums[i][j] * nums[i + 1][j + 1] * nums[i + 2][j + 2] * nums[i + 3][j + 3];
-                    if (product > result) {
-                        result = product;
-                    }
-                }
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 17; j++) {
+                result = Integer.max(result, nums[i][j] * nums[i + 1][j + 1] * nums[i + 2][j + 2] * nums[i + 3][i + 3]);
             }
         }
-        //From right up corner to left down direction
-        for (int i = 3; i < 20; i++) {
+        for (int i = 0; i < 17; i++) {
             for (int j = 3; j < 20; j++) {
-                if (nums[i][j] != 0 && nums[i - 1][j - 1] != 0 && nums[i - 2][j - 2] != 0 && nums[i - 3][j - 3] != 0) {
-                    val product = nums[i][j] * nums[i - 1][j - 1] * nums[i - 2][j - 2] * nums[i - 3][j - 3];
-                    if (product > result) {
-                        result = product;
-                    }
-                }
+                result = Integer.max(result, nums[i][j] * nums[i + 1][j - 1] * nums[i + 2][j - 2] * nums[i + 3][j - 3]);
             }
         }
-
         return result;
     }
 }
