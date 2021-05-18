@@ -31,6 +31,10 @@ import java.util.stream.LongStream;
 @Component
 public class Euler12 {
 
+    public static void main(String[] args) {
+        System.out.println(new Euler12().bruteforceSolution(500));
+    }
+
     @LogTimer
     @Attachment
     @Step("Finding the value of the first triangle number to have over {overDivisorsNumber} divisors")
@@ -40,7 +44,7 @@ public class Euler12 {
         for (long i = 2L; ; i++) {
             lastChecked += i;
             val temp = lastChecked;
-            if (LongStream.rangeClosed(1L, lastChecked).parallel().filter(x -> temp % x == 0).count() > overDivisorsNumber) {
+            if (LongStream.rangeClosed(2L, (lastChecked / 2) + 1).parallel().filter(x -> temp % x == 0).count() > overDivisorsNumber) {
                 return lastChecked;
             }
         }
