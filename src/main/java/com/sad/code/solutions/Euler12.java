@@ -7,6 +7,7 @@ import lombok.val;
 import lombok.var;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
@@ -31,22 +32,24 @@ import java.util.stream.LongStream;
 @Component
 public class Euler12 {
 
-    public static void main(String[] args) {
-        System.out.println(new Euler12().bruteforceSolution(500));
-    }
-
     @LogTimer
     @Attachment
     @Step("Finding the value of the first triangle number to have over {overDivisorsNumber} divisors")
     public long bruteforceSolution(final int overDivisorsNumber) {
-        long lastChecked = 1L;
+        var lastChecked = 1L;
+        var divisorsCount = 0;
 
-        for (long i = 2L; ; i++) {
+        for (long i = 2L; divisorsCount < overDivisorsNumber; i++) {
             lastChecked += i;
             val temp = lastChecked;
-            if (LongStream.rangeClosed(2L, (lastChecked / 2) + 1).parallel().filter(x -> temp % x == 0).count() > overDivisorsNumber) {
-                return lastChecked;
-            }
+
+            divisorsCount = (int) LongStream.rangeClosed(2L, Math.round(Math.sqrt(lastChecked)))
+                    //looking on factors before sqrt because another factors greater than sqrt would be a mirror
+                    .parallel()
+                    .filter(x -> temp % x == 0)
+                    .count() * 2; //mirror factors we would count as *2 like (2 and 8 || 8 and 2)
         }
+
+        return lastChecked;
     }
 }
